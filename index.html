@@ -1,0 +1,292 @@
+<html>
+<head>
+  <!-- Adapted version of http://lensco.be/files/clocks/ -->
+  <!-- Changes: don't touch server for animations settings: 100% client side   -->
+  <!--          Use http://json-time.appspot.com instead for getting timezones -->
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+  <link rel="apple-touch-icon-precomposed" href="tz.png"/> 
+  
+  <title>Linking Paths Timezones</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+  <style type="text/css">
+    .seconds {
+      -webkit-animation: seconds 60s cubic-bezier(0, 1, 0, 1) infinite;
+      -webkit-transform-origin: center 83.33333%;
+      }
+    .minutes {
+      -webkit-transform-origin: center 83.33333%;
+      }
+      #clock1 .minutes {
+        -webkit-animation: minutes1 3600s linear infinite;
+        }
+      #clock2 .minutes {
+        -webkit-animation: minutes2 3600s linear infinite;
+        }
+      #clock3 .minutes {
+        -webkit-animation: minutes3 3600s linear infinite;
+        }
+      #clock4 .minutes {
+        -webkit-animation: minutes4 3600s linear infinite;
+        }
+    .hours {
+      -webkit-transform-origin: center 83.33333%;
+      }
+      #clock1 .hours {
+        -webkit-animation: hours1 43200s linear infinite;
+        }
+      #clock2 .hours {
+        -webkit-animation: hours2 43200s linear infinite;
+        }
+      #clock3 .hours {
+        -webkit-animation: hours3 43200s linear infinite;
+        }
+      #clock4 .hours {
+        -webkit-animation: hours3 43200s linear infinite;
+        }
+    
+    
+    @-webkit-keyframes seconds {
+      0% { -webkit-transform: rotate(0deg); }
+      1.67% { -webkit-transform: rotate(6deg); }
+      3.33% { -webkit-transform: rotate(12deg); }
+      5% { -webkit-transform: rotate(18deg); }
+      6.67% { -webkit-transform: rotate(24deg); }
+      8.33% { -webkit-transform: rotate(30deg); }
+      10% { -webkit-transform: rotate(36deg); }
+      11.67% { -webkit-transform: rotate(42deg); }
+      13.33% { -webkit-transform: rotate(48deg); }
+      15% { -webkit-transform: rotate(54deg); }
+      16.67% { -webkit-transform: rotate(60deg); }
+      18.33% { -webkit-transform: rotate(66deg); }
+      20% { -webkit-transform: rotate(72deg); }
+      21.67% { -webkit-transform: rotate(78deg); }
+      23.33% { -webkit-transform: rotate(84deg); }
+      25% { -webkit-transform: rotate(90deg); }
+      26.67% { -webkit-transform: rotate(96deg); }
+      28.33% { -webkit-transform: rotate(102deg); }
+      30% { -webkit-transform: rotate(108deg); }
+      31.67% { -webkit-transform: rotate(114deg); }
+      33.33% { -webkit-transform: rotate(120deg); }
+      35% { -webkit-transform: rotate(126deg); }
+      36.67% { -webkit-transform: rotate(132deg); }
+      38.33% { -webkit-transform: rotate(138deg); }
+      40% { -webkit-transform: rotate(144deg); }
+      41.67% { -webkit-transform: rotate(150deg); }
+      43.33% { -webkit-transform: rotate(156deg); }
+      45% { -webkit-transform: rotate(162deg); }
+      46.67% { -webkit-transform: rotate(168deg); }
+      48.33% { -webkit-transform: rotate(174deg); }
+      50% { -webkit-transform: rotate(180deg); }
+      51.67% { -webkit-transform: rotate(186deg); }
+      53.33% { -webkit-transform: rotate(192deg); }
+      55% { -webkit-transform: rotate(198deg); }
+      56.67% { -webkit-transform: rotate(204deg); }
+      58.33% { -webkit-transform: rotate(210deg); }
+      60% { -webkit-transform: rotate(216deg); }
+      61.67% { -webkit-transform: rotate(222deg); }
+      63.33% { -webkit-transform: rotate(228deg); }
+      65% { -webkit-transform: rotate(234deg); }
+      66.67% { -webkit-transform: rotate(240deg); }
+      68.33% { -webkit-transform: rotate(246deg); }
+      70% { -webkit-transform: rotate(252deg); }
+      71.67% { -webkit-transform: rotate(258deg); }
+      73.33% { -webkit-transform: rotate(264deg); }
+      75% { -webkit-transform: rotate(270deg); }
+      76.67% { -webkit-transform: rotate(276deg); }
+      78.33% { -webkit-transform: rotate(282deg); }
+      80% { -webkit-transform: rotate(288deg); }
+      81.67% { -webkit-transform: rotate(294deg); }
+      83.33% { -webkit-transform: rotate(300deg); }
+      85% { -webkit-transform: rotate(306deg); }
+      86.67% { -webkit-transform: rotate(312deg); }
+      88.33% { -webkit-transform: rotate(318deg); }
+      90% { -webkit-transform: rotate(324deg); }
+      91.67% { -webkit-transform: rotate(330deg); }
+      93.33% { -webkit-transform: rotate(336deg); }
+      95% { -webkit-transform: rotate(342deg); }
+      96.67% { -webkit-transform: rotate(348deg); }
+      98.33% { -webkit-transform: rotate(354deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    
+
+    .localtime{
+      color:#bfbfbf;
+    }
+
+  </style>
+  <script>
+  $(document).ready(function() {
+    
+    $.getJSON("http://json-time.appspot.com/time.json?tz=America/Toronto&callback=?", function(data){
+
+      deg = data.minute * 6
+      hdeg = data.hour * 30 + (data.minute / 2);
+      $("body").append("<style>@-webkit-keyframes toronto_minutes {0%  { -webkit-transform: rotate("+deg+"deg); } 100% { -webkit-transform: rotate("+(deg+360)+"deg); }}</style>")
+      $("body").append("<style>@-webkit-keyframes toronto_hours {0%  { -webkit-transform: rotate("+hdeg+"deg); } 100% { -webkit-transform: rotate("+(hdeg+360)+"deg); }}</style>")
+      $("#clock1 .hours").css('-webkit-animation-name', 'toronto_hours');
+      $("#clock1 .minutes").css('-webkit-animation-name', 'toronto_minutes');
+      
+      $("#localtime_toronto").html(("0" + data.hour).slice (-2) + ":" + ("0" + data.minute).slice (-2));
+      
+    })
+    $.getJSON("http://json-time.appspot.com/time.json?tz=Iceland&callback=?", function(data){
+      deg = data.minute * 6
+      hdeg = data.hour * 30 + (data.minute / 2);
+      $("body").append("<style>@-webkit-keyframes reykjavik_minutes {0%  { -webkit-transform: rotate("+deg+"deg); } 100% { -webkit-transform: rotate("+(deg+360)+"deg); }}</style>")
+      $("body").append("<style>@-webkit-keyframes reykjavik_hours {0%  { -webkit-transform: rotate("+hdeg+"deg); } 100% { -webkit-transform: rotate("+(hdeg+360)+"deg); }}</style>")
+      $("#clock2 .hours").css('-webkit-animation-name', 'reykjavik_hours');
+      $("#clock2 .minutes").css('-webkit-animation-name', 'reykjavik_minutes');
+
+      $("#localtime_reykjavik").html(("0" + data.hour).slice (-2) + ":" + ("0" + data.minute).slice (-2));
+      
+    })
+    $.getJSON("http://json-time.appspot.com/time.json?tz=Europe/Madrid&callback=?", function(data){
+      deg = data.minute * 6
+      hdeg = data.hour * 30 + (data.minute / 2);
+      $("body").append("<style>@-webkit-keyframes bilbao_minutes {0%  { -webkit-transform: rotate("+deg+"deg); } 100% { -webkit-transform: rotate("+(deg+360)+"deg); }}</style>")
+      $("body").append("<style>@-webkit-keyframes bilbao_hours {0%  { -webkit-transform: rotate("+hdeg+"deg); } 100% { -webkit-transform: rotate("+(hdeg+360)+"deg); }}</style>")
+      $("#clock3 .hours, #clock4 .hours").css('-webkit-animation-name', 'bilbao_hours');
+      $("#clock3 .minutes, #clock4 .minutes").css('-webkit-animation-name', 'bilbao_minutes');
+
+
+      $("#localtime_madrid").html(("0" + data.hour).slice (-2) + ":" + ("0" + data.minute).slice (-2));
+      $("#localtime_bilbao").html(("0" + data.hour).slice (-2) + ":" + ("0" + data.minute).slice (-2));
+      
+    })
+  }); 
+
+
+  </script>
+</head>
+<body>
+
+<div id="clock1" class="clock">
+  <div class="clockBorderShadow">
+    <div class="clockBackground">
+      <div class="seconds"></div>
+      <div class="minutes"></div>
+      <div class="hours"></div>
+      <div class="center"></div>
+
+      <ol class="handles">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="label">
+    Toronto<br/><span class="localtime" id="localtime_toronto"></span>
+  </div>
+</div>
+
+<div id="clock2" class="clock">
+  <div class="clockBorderShadow">
+    <div class="clockBackground">
+      <div class="seconds"></div>
+      <div class="minutes"></div>
+      <div class="hours"></div>
+      <div class="center"></div>
+
+      <ol class="handles">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="label">
+    Reykjavík<br/><span class="localtime" id="localtime_reykjavik"></span>
+  </div>
+</div>
+
+<div id="clock3" class="clock">
+  <div class="clockBorderShadow">
+    <div class="clockBackground">
+      <div class="seconds"></div>
+      <div class="minutes"></div>
+      <div class="hours"></div>
+      <div class="center"></div>
+
+      <ol class="handles">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="label">
+    Madrid<br/><span class="localtime" id="localtime_madrid"></span>
+  </div>
+</div>
+
+<div id="clock4" class="clock">
+  <div class="clockBorderShadow">
+    <div class="clockBackground">
+      <div class="seconds"></div>
+      <div class="minutes"></div>
+      <div class="hours"></div>
+      <div class="center"></div>
+
+      <ol class="handles">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="label">
+    Bilbao<br/><span class="localtime" id="localtime_bilbao"></span>
+  </div>
+</div>
+
+
+</body></html>
